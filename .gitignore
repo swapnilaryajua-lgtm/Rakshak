@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+web-frontend/node_modules/
+
+# Python
+web-backend/venv/
+web-backend/__pycache__/
+web-backend/app/__pycache__/
+web-backend/app/**/__pycache__/
+*.pyc
+*.pyo
+
+# Database
+web-backend/rakshak.db
+*.db
+
+# Environment
+.env
+web-backend/.env
+
+# IDE / Editor configs
+.agents/
+.augment/
+.claude/
+.codebuddy/
+.codewhale/
+.continue/
+.cursor/
+.factory/
+.gemini/
+.github/
+.kilocode/
+.kiro/
+.opencode/
+.qoder/
+.roo/
+.trae/
+.warp/
+.windsurf/
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Build output
+dist/
+build/
+
+# Test output
+web-backend/e2e_output*.txt
+web-backend/docker_curl.txt
+web-backend/zap_alerts.json
+
+# Misc
+corsair_readme.md

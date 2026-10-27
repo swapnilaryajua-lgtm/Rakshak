@@ -1,0 +1,4 @@
+PySide6>=6.6.0
+plyer>=2.1.0
+requests>=2.31.0
+cryptography>=41.0.0
