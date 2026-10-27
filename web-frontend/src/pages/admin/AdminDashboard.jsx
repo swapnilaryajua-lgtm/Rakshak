@@ -65,9 +65,9 @@ export default function AdminDashboard() {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: '20px',
-        marginBottom: '32px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
+        gap: '16px',
+        marginBottom: '24px'
       }}>
         <StatCard 
           variant="dark"
@@ -101,7 +101,7 @@ export default function AdminDashboard() {
         />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '20px' }}>
         {/* Subscription Breakdown */}
         <Card variant="dark" style={{ padding: '24px' }}>
           <h2 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '24px', marginTop: 0 }}>Subscription Breakdown</h2>

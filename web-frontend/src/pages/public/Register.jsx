@@ -29,7 +29,7 @@ export default function Register() {
     };
 
     return (
-        <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: 'var(--bg-primary, #FAF8F5)', minHeight: 'calc(100vh - 64px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+        <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: 'var(--bg-primary, #FAF8F5)', minHeight: 'calc(100vh - 64px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(16px, 4vw, 32px)' }}>
             <style>
                 {`
                 .input-field { width: 100%; height: 48px; border-radius: 8px; border: 1px solid var(--border-default, #E7E5E4); padding: 0 16px; font-size: 16px; outline: none; transition: border-color 0.2s; margin-bottom: 16px; box-sizing: border-box; }
@@ -37,7 +37,7 @@ export default function Register() {
                 .label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary, #1C1917); }
                 `}
             </style>
-            <Card style={{ width: '100%', maxWidth: '440px', padding: '40px' }}>
+            <Card style={{ width: '100%', maxWidth: '440px', padding: 'clamp(24px, 5vw, 40px)' }}>
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
                     <h1 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '8px' }}>Create an Account</h1>
                     <p style={{ color: 'var(--text-secondary, #57534E)' }}>Sign up for Rakshak to protect your assets</p>

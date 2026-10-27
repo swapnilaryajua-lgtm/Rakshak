@@ -105,23 +105,24 @@ export default function Scan() {
     };
 
     return (
-        <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: 'var(--bg-primary, #FAF8F5)', minHeight: 'calc(100vh - 64px)', padding: '64px 24px', color: 'var(--text-primary, #1C1917)' }}>
+        <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: 'var(--bg-primary, #FAF8F5)', minHeight: 'calc(100vh - 64px)', padding: 'clamp(24px, 5vw, 64px) clamp(16px, 4vw, 24px)', color: 'var(--text-primary, #1C1917)' }}>
             <style>
                 {`
-                .input-field { width: 100%; height: 56px; border-radius: 12px; border: 1px solid var(--border-default, #E7E5E4); padding: 0 16px; font-size: 16px; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+                .input-field { width: 100%; height: 52px; border-radius: 10px; border: 1px solid var(--border-default, #E7E5E4); padding: 0 16px; font-size: 16px; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
                 .input-field:focus { border-color: var(--accent, #0D9488); box-shadow: 0 0 0 2px var(--accent-light, #CCFBF1); }
-                .scan-form { display: flex; gap: 16px; flex-direction: column; }
-                @media (min-width: 768px) { .scan-form { flex-direction: row; } }
-                .progress-bar-bg { width: 100%; height: 3px; background: var(--border-default, #E7E5E4); border-radius: 3px; overflow: hidden; position: relative; margin: 24px 0; }
+                .scan-form { display: flex; gap: 12px; flex-direction: column; width: 100%; }
+                @media (min-width: 640px) { .scan-form { flex-direction: row; } }
+                .progress-bar-bg { width: 100%; height: 4px; background: var(--border-default, #E7E5E4); border-radius: 4px; overflow: hidden; position: relative; margin: 24px 0; }
                 .progress-bar-fill { position: absolute; top: 0; bottom: 0; background: var(--accent, #0D9488); width: 30%; animation: indeterminate 1.5s infinite linear; }
                 @keyframes indeterminate { 0% { left: -30%; right: 100%; } 100% { left: 100%; right: -30%; } }
-                .vuln-card { display: flex; background: white; border-radius: 12px; border: 1px solid var(--border-default, #E7E5E4); overflow: hidden; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(28,25,23,0.06); cursor: pointer; }
-                .vuln-color-bar { width: 4px; flex-shrink: 0; }
-                .vuln-content { padding: 24px; flex-grow: 1; }
-                .vuln-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 12px; }
-                .cwe-badge { background: var(--bg-secondary, #F3F0EB); color: var(--text-secondary, #57534E); padding: 4px 8px; border-radius: 9999px; font-size: 12px; font-family: monospace; }
-                .location-code { background: var(--bg-secondary, #F3F0EB); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 14px; color: var(--text-secondary, #57534E); }
-                .remediation-box { background: var(--accent-light, #CCFBF1); padding: 16px; border-radius: 8px; margin-top: 16px; }
+                .vuln-card { display: flex; background: white; border-radius: 12px; border: 1px solid var(--border-default, #E7E5E4); overflow: hidden; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(28,25,23,0.06); cursor: pointer; transition: transform 0.15s ease; }
+                .vuln-card:hover { transform: translateY(-1px); }
+                .vuln-color-bar { width: 5px; flex-shrink: 0; }
+                .vuln-content { padding: clamp(14px, 3vw, 24px); flex-grow: 1; min-width: 0; }
+                .vuln-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+                .cwe-badge { background: var(--bg-secondary, #F3F0EB); color: var(--text-secondary, #57534E); padding: 3px 8px; border-radius: 9999px; font-size: 11px; font-family: monospace; }
+                .location-code { background: var(--bg-secondary, #F3F0EB); padding: 3px 8px; border-radius: 4px; font-family: monospace; font-size: 13px; color: var(--text-secondary, #57534E); word-break: break-all; display: inline-block; }
+                .remediation-box { background: var(--accent-light, #CCFBF1); padding: 14px 16px; border-radius: 8px; margin-top: 16px; word-break: break-word; }
                 .severity-critical { background: var(--severity-critical, #DC2626); }
                 .severity-high { background: var(--severity-high, #EA580C); }
                 .severity-medium { background: var(--severity-medium, #D97706); }
@@ -133,8 +134,8 @@ export default function Scan() {
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 {state === 'idle' && (
                     <div style={{ textAlign: 'center' }}>
-                        <h1 style={{ fontSize: '40px', fontWeight: 800, marginBottom: '16px' }}>Vulnerability Scanner</h1>
-                        <p style={{ fontSize: '18px', color: 'var(--text-secondary, #57534E)', marginBottom: '40px' }}>Enter a URL to scan for security vulnerabilities. Results are generated in real-time using OWASP ZAP and are not stored on our servers.</p>
+                        <h1 style={{ fontSize: 'clamp(28px, 4.5vw, 40px)', fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.5px' }}>Vulnerability Scanner</h1>
+                        <p style={{ fontSize: 'clamp(15px, 2vw, 18px)', color: 'var(--text-secondary, #57534E)', marginBottom: '32px', lineHeight: 1.6 }}>Enter a URL to scan for security vulnerabilities. Results are generated in real-time using OWASP ZAP and are not stored on our servers.</p>
                         {user ? (
                             <>
                                 <form className="scan-form" onSubmit={handleScan}>
@@ -146,18 +147,18 @@ export default function Scan() {
                                         value={url} 
                                         onChange={(e) => setUrl(e.target.value)} 
                                     />
-                                    <Button variant="primary" type="submit" style={{ whiteSpace: 'nowrap' }}>Start Scan</Button>
+                                    <Button variant="primary" type="submit" style={{ whiteSpace: 'nowrap', minHeight: '52px', padding: '0 28px' }}>Start Scan</Button>
                                 </form>
-                                <p style={{ fontSize: '12px', color: 'var(--text-muted, #A8A29E)', marginTop: '24px' }}>By using this tool, you confirm that you have authorization to scan the target URL.</p>
+                                <p style={{ fontSize: '12px', color: 'var(--text-muted, #A8A29E)', marginTop: '20px' }}>By using this tool, you confirm that you have authorization to scan the target URL.</p>
                             </>
                         ) : (
-                            <Card style={{ padding: '32px', backgroundColor: 'var(--bg-secondary)', border: '1px dashed var(--border-default)' }}>
-                                <ShieldAlert size={48} color="var(--accent)" style={{ margin: '0 auto 16px' }} />
-                                <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '8px' }}>Authentication Required</h3>
-                                <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>Please log in or create an account to run a free vulnerability scan.</p>
-                                <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
-                                    <Link to="/login"><Button variant="primary">Login</Button></Link>
-                                    <Link to="/register"><Button variant="secondary">Sign Up</Button></Link>
+                            <Card style={{ padding: 'clamp(24px, 4vw, 40px)', backgroundColor: 'var(--bg-secondary)', border: '1px dashed var(--border-default)' }}>
+                                <ShieldAlert size={44} color="var(--accent)" style={{ margin: '0 auto 16px' }} />
+                                <h3 style={{ fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 600, marginBottom: '8px' }}>Authentication Required</h3>
+                                <p style={{ color: 'var(--text-secondary)', marginBottom: '24px', fontSize: '15px' }}>Please log in or create an account to run a free vulnerability scan.</p>
+                                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                                    <Link to="/login" style={{ textDecoration: 'none' }}><Button variant="primary" style={{ minWidth: '120px', minHeight: '44px' }}>Login</Button></Link>
+                                    <Link to="/register" style={{ textDecoration: 'none' }}><Button variant="secondary" style={{ minWidth: '120px', minHeight: '44px' }}>Sign Up</Button></Link>
                                 </div>
                             </Card>
                         )}

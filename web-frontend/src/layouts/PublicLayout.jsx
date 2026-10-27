@@ -4,26 +4,10 @@ import Navbar from '../components/Navbar.jsx';
 
 export default function PublicLayout({ children }) {
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'row', 
-      height: '100vh',
-      backgroundColor: 'var(--bg-primary, #FAF8F5)',
-      overflow: 'hidden'
-    }}>
+    <div className="flex flex-col lg:flex-row h-screen w-full bg-[var(--bg-primary,#FAF8F5)] overflow-hidden">
       <Navbar />
-      <div style={{ 
-        flex: 1, 
-        display: 'flex', 
-        flexDirection: 'column',
-        overflowX: 'hidden',
-        overflowY: 'auto'
-      }}>
-        <main style={{ 
-          flex: 1, 
-          display: 'flex', 
-          flexDirection: 'column' 
-        }}>
+      <div className="flex-1 flex flex-col overflow-x-hidden overflow-y-auto touch-scroll">
+        <main className="flex-1 flex flex-col min-h-0">
           {children || <Outlet />}
         </main>
       </div>

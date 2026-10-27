@@ -137,15 +137,15 @@ export default function AdminUsers() {
       <Card variant="dark" style={{ padding: '0', overflow: 'hidden' }}>
         {/* Toolbar */}
         <div style={{ 
-          padding: '16px 24px', 
+          padding: '16px', 
           borderBottom: '1px solid var(--border-admin)',
           display: 'flex',
-          gap: '16px',
+          gap: '12px',
           flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between'
         }}>
-          <div style={{ position: 'relative', width: '320px', maxWidth: '100%' }}>
+          <div style={{ position: 'relative', flex: '1 1 240px', minWidth: '200px', maxWidth: '100%' }}>
             <Search size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             <input 
               type="text" 
@@ -154,33 +154,34 @@ export default function AdminUsers() {
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
                 width: '100%',
-                padding: '8px 12px 8px 38px',
+                padding: '10px 12px 10px 38px',
                 backgroundColor: 'var(--bg-admin)',
                 border: '1px solid var(--border-admin)',
                 borderRadius: '6px',
                 color: 'var(--text-admin)',
                 fontFamily: 'inherit',
-                fontSize: '0.875rem',
+                fontSize: '15px',
                 outline: 'none',
                 boxSizing: 'border-box'
               }}
             />
           </div>
           
-          <div style={{ display: 'flex', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', flex: '0 1 auto' }}>
             <select 
               value={planFilter}
               onChange={(e) => setPlanFilter(e.target.value)}
               style={{
-                padding: '8px 12px',
+                padding: '10px 12px',
                 backgroundColor: 'var(--bg-admin)',
                 border: '1px solid var(--border-admin)',
                 borderRadius: '6px',
                 color: 'var(--text-admin)',
                 fontFamily: 'inherit',
-                fontSize: '0.875rem',
+                fontSize: '14px',
                 outline: 'none',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                minHeight: '40px'
               }}
             >
               <option value="All">All Plans</option>
@@ -193,15 +194,16 @@ export default function AdminUsers() {
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               style={{
-                padding: '8px 12px',
+                padding: '10px 12px',
                 backgroundColor: 'var(--bg-admin)',
                 border: '1px solid var(--border-admin)',
                 borderRadius: '6px',
                 color: 'var(--text-admin)',
                 fontFamily: 'inherit',
-                fontSize: '0.875rem',
+                fontSize: '14px',
                 outline: 'none',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                minHeight: '40px'
               }}
             >
               <option value="All">All Statuses</option>
@@ -211,9 +213,9 @@ export default function AdminUsers() {
           </div>
         </div>
 
-        {/* Table */}
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+        {/* Table wrapper */}
+        <div className="touch-scroll" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid var(--border-admin)', backgroundColor: '#353130' }}>
                 <th style={{ padding: '12px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '600' }}>User</th>

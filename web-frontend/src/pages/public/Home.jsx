@@ -26,8 +26,8 @@ export default function Home() {
 
     return (
         <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: '#000', color: '#fff', position: 'relative', minHeight: '100vh', width: '100%' }}>
-            {/* Fixed Background Grid */}
-            <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'auto' }}>
+            {/* Fixed Background Grid with pointer-events: none to allow smooth mobile touch gestures */}
+            <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
                 <KineticGrid globalColor="default" style={{ width: '100%', height: '100%' }} />
             </div>
 
@@ -40,11 +40,11 @@ export default function Home() {
                   background: radial-gradient(circle, rgba(0,229,255,0.15) 0%, rgba(0,0,0,0) 70%);
                   top: -100px;
                 }
-                .bento-grid { display: grid; grid-template-columns: 1fr; gap: 24px; position: relative; z-index: 1; }
-                @media (min-width: 768px) { .bento-grid { grid-template-columns: 1fr 1fr; } .bento-span-full { grid-column: span 2; } }
-                .trust-grid { display: grid; grid-template-columns: 1fr; gap: 32px; text-align: center; }
-                @media (min-width: 768px) { .trust-grid { grid-template-columns: repeat(3, 1fr); } }
-                .step-card { position: relative; padding: 32px; border-radius: 16px; background: rgba(20,20,20,0.8); border: 1px solid rgba(255,255,255,0.1); text-align: center; display: flex; flexDirection: column; alignItems: center; gap: 16px; }
+                .bento-grid { display: grid; grid-template-columns: 1fr; gap: 20px; position: relative; z-index: 1; }
+                @media (min-width: 640px) { .bento-grid { grid-template-columns: 1fr 1fr; } .bento-span-full { grid-column: span 2; } }
+                .trust-grid { display: grid; grid-template-columns: 1fr; gap: 24px; text-align: center; }
+                @media (min-width: 640px) { .trust-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+                .step-card { position: relative; padding: 24px; border-radius: 16px; background: rgba(20,20,20,0.8); border: 1px solid rgba(255,255,255,0.1); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
                 `}
             </style>
             
@@ -52,26 +52,26 @@ export default function Home() {
             <div style={{ position: 'relative', zIndex: 1 }}>
                 
                 {/* Hero Section */}
-                <div style={{ minHeight: 'calc(100vh - 72px)', display: 'flex', alignItems: 'center', padding: '64px 24px', overflow: 'hidden' }}>
-                    <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '48px', width: '100%', position: 'relative', zIndex: 1 }}>
+                <div style={{ minHeight: 'calc(100vh - 72px)', display: 'flex', alignItems: 'center', padding: 'clamp(32px, 6vw, 64px) clamp(16px, 4vw, 24px)', overflow: 'hidden' }}>
+                    <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '32px', width: '100%', position: 'relative', zIndex: 1 }}>
                         
                         {/* Text on the left */}
                         <motion.div 
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.5, type: 'tween', ease: 'easeOut' }}
-                          style={{ flex: '1 1 500px', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative', zIndex: 1, pointerEvents: 'none' }}
+                          style={{ flex: '1 1 min(100%, 480px)', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}
                         >
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} style={{ marginBottom: '24px' }}>
-                              <img src="/logo.png" alt="Rakshak Logo" style={{ height: '64px', width: 'auto', objectFit: 'contain' }} />
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} style={{ marginBottom: '20px' }}>
+                              <img src="/logo.png" alt="Rakshak Logo" style={{ height: 'clamp(44px, 6vw, 64px)', width: 'auto', objectFit: 'contain' }} />
                             </motion.div>
-                            <h1 style={{ fontWeight: 800, fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 1.1, marginBottom: '24px', letterSpacing: '-1px', textAlign: 'left' }}>
+                            <h1 style={{ fontWeight: 800, fontSize: 'clamp(28px, 5vw, 54px)', lineHeight: 1.15, marginBottom: '20px', letterSpacing: '-0.5px', textAlign: 'left' }}>
                               <Typewriter text={["Your Digital Shield Against Cyber Threats"]} speed={50} loop={false} />
                             </h1>
-                            <p style={{ fontWeight: 400, fontSize: '18px', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '40px', lineHeight: 1.6, maxWidth: '500px', textAlign: 'left', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                            <p style={{ fontWeight: 400, fontSize: 'clamp(15px, 2vw, 18px)', color: 'rgba(255, 255, 255, 0.75)', marginBottom: '32px', lineHeight: 1.6, maxWidth: '500px', textAlign: 'left', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                               Scan vulnerabilities. Monitor in real-time. Defend automatically. Rakshak provides enterprise-grade cybersecurity tools powered by local intelligence to keep your web applications impenetrable.
                             </p>
-                            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'flex-start', pointerEvents: 'auto' }}>
+                            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'flex-start', width: '100%' }}>
                                 <motion.div
                                   whileHover={{ 
                                     scale: 1.05,
@@ -80,7 +80,7 @@ export default function Home() {
                                   transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                                   style={{ borderRadius: '50px' }}
                                 >
-                                  <Button variant="primary" size="lg" onClick={() => navigate('/scan')} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '16px 32px', fontSize: '18px', borderRadius: '50px' }}>
+                                  <Button variant="primary" size="lg" onClick={() => navigate('/scan')} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '14px 28px', fontSize: '16px', borderRadius: '50px', minHeight: '48px' }}>
                                     Start Free Scan <ArrowRight size={18} />
                                   </Button>
                                 </motion.div>
@@ -92,7 +92,7 @@ export default function Home() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.8, delay: 0.2, type: 'tween', ease: 'easeOut' }}
-                          style={{ flex: '1 1 500px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '600px', maxWidth: '600px', zIndex: 0, opacity: 0.9 }}
+                          style={{ flex: '1 1 min(100%, 460px)', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'clamp(280px, 45vw, 550px)', width: '100%', maxWidth: '550px', margin: '0 auto', zIndex: 0, opacity: 0.95 }}
                         >
                             <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <GlobeInteractive />
@@ -101,12 +101,12 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* How It Works Section [NEW] */}
-                <section style={{ padding: '96px 24px', overflow: 'hidden' }}>
+                {/* How It Works Section */}
+                <section style={{ padding: 'clamp(48px, 8vw, 96px) clamp(16px, 4vw, 24px)', overflow: 'hidden' }}>
                   <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}>
-                      <h2 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '16px', textAlign: 'center', letterSpacing: '-0.5px', color: '#fff' }}>Simple, Yet Powerful</h2>
-                      <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', marginBottom: '64px', fontSize: '18px', maxWidth: '600px', margin: '0 auto 64px auto' }}>Secure your infrastructure in three simple steps without modifying a single line of your application code.</p>
+                      <h2 style={{ fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 700, marginBottom: '16px', textAlign: 'center', letterSpacing: '-0.5px', color: '#fff' }}>Simple, Yet Powerful</h2>
+                      <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', marginBottom: 'clamp(32px, 6vw, 64px)', fontSize: 'clamp(15px, 2vw, 18px)', maxWidth: '600px', margin: '0 auto clamp(32px, 6vw, 64px) auto' }}>Secure your infrastructure in three simple steps without modifying a single line of your application code.</p>
                     </motion.div>
 
                     <motion.div 
@@ -148,11 +148,11 @@ export default function Home() {
                 </section>
 
                 {/* Features Section */}
-                <section style={{ padding: '120px 24px' }}>
+                <section style={{ padding: 'clamp(48px, 8vw, 96px) clamp(16px, 4vw, 24px)' }}>
                     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
                         <motion.h2 
                           initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeInUp}
-                          style={{ fontSize: '36px', fontWeight: 700, marginBottom: '64px', textAlign: 'center', letterSpacing: '-0.5px', color: '#fff' }}
+                          style={{ fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 700, marginBottom: 'clamp(32px, 6vw, 64px)', textAlign: 'center', letterSpacing: '-0.5px', color: '#fff' }}
                         >
                           Three Layers of Protection
                         </motion.h2>

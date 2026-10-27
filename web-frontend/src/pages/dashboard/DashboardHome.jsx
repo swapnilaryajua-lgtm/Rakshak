@@ -29,18 +29,19 @@ export default function DashboardHome() {
   }, []);
 
   return (
-    <div style={{ padding: '24px', animation: 'fadeIn 0.3s ease-out' }}>
+    <div style={{ padding: 'clamp(16px, 3vw, 24px)', animation: 'fadeIn 0.3s ease-out' }}>
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <h1 style={{ 
-          fontSize: '1.5rem', 
+          fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', 
           fontWeight: '600', 
-          color: 'var(--text-primary)'
+          color: 'var(--text-primary)',
+          margin: 0
         }}>
           System Overview
         </h1>
@@ -59,9 +60,9 @@ export default function DashboardHome() {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '24px',
-        marginBottom: '32px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
+        gap: '16px',
+        marginBottom: '24px'
       }}>
         <StatCard 
           title="Scans This Month" 
@@ -89,29 +90,31 @@ export default function DashboardHome() {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '24px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+        gap: '20px'
       }}>
-        <Card style={{ padding: '24px' }}>
+        <Card style={{ padding: 'clamp(16px, 3vw, 24px)' }}>
           <h2 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '16px', color: 'var(--text-primary)' }}>Quick Scan</h2>
           <p style={{ color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '0.875rem' }}>
             Run a quick scan on a new target URL.
           </p>
-          <div style={{ display: 'flex', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <input 
               type="text" 
               placeholder="https://example.com" 
               style={{
-                flex: 1,
-                padding: '10px 16px',
-                borderRadius: '0px',
+                flex: '1 1 200px',
+                padding: '10px 14px',
+                borderRadius: '6px',
                 border: '1px solid var(--border-default)',
                 fontFamily: 'inherit',
-                fontSize: '0.875rem',
-                outline: 'none'
+                fontSize: '15px',
+                outline: 'none',
+                minHeight: '44px',
+                boxSizing: 'border-box'
               }}
             />
-            <Button variant="primary">Scan Now</Button>
+            <Button variant="primary" style={{ minHeight: '44px', padding: '0 20px', flexShrink: 0 }}>Scan Now</Button>
           </div>
         </Card>
 

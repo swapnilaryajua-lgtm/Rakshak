@@ -24,22 +24,23 @@ export default function Pricing() {
     ];
 
     return (
-        <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: 'var(--bg-primary, #FAF8F5)', minHeight: 'calc(100vh - 64px)', padding: '64px 24px', color: 'var(--text-primary, #1C1917)' }}>
+        <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: 'var(--bg-primary, #FAF8F5)', minHeight: 'calc(100vh - 64px)', padding: 'clamp(24px, 5vw, 64px) clamp(16px, 4vw, 24px)', color: 'var(--text-primary, #1C1917)' }}>
             <style>
                 {`
                 .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
                 .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-                .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: stretch; margin-top: 48px; }
-                @media (min-width: 1024px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: center; } }
-                .feature-item { display: flex; alignItems: flex-start; gap: 12px; margin-bottom: 16px; font-size: 15px; color: var(--text-secondary, #57534E); }
+                .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: stretch; margin-top: 36px; }
+                @media (min-width: 640px) and (max-width: 1023px) { .pricing-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); } }
+                @media (min-width: 1024px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+                .feature-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; font-size: 14px; color: var(--text-secondary, #57534E); }
                 .pro-card { transform: scale(1); border: 2px solid var(--accent, #0D9488); }
-                @media (min-width: 1024px) { .pro-card { transform: scale(1.03); z-index: 10; } }
-                .faq-item { border-bottom: 1px solid var(--border-default, #E7E5E4); padding: 24px 0; cursor: pointer; }
-                .faq-q { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 18px; }
-                .faq-a { margin-top: 16px; color: var(--text-secondary, #57534E); line-height: 1.6; display: none; }
+                @media (min-width: 1024px) { .pro-card { transform: scale(1.02); z-index: 10; } }
+                .faq-item { border-bottom: 1px solid var(--border-default, #E7E5E4); padding: 20px 0; cursor: pointer; touch-action: manipulation; }
+                .faq-q { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: clamp(16px, 2.5vw, 18px); min-height: 44px; }
+                .faq-a { margin-top: 14px; color: var(--text-secondary, #57534E); line-height: 1.6; display: none; font-size: 15px; }
                 .faq-a.open { display: block; }
-                .toggle-container { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 32px 0; font-weight: 600; }
-                .toggle-btn { background: var(--border-default); border-radius: 999px; width: 64px; height: 32px; position: relative; cursor: pointer; transition: background 0.3s; }
+                .toggle-container { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 28px 0; font-weight: 600; font-size: 15px; cursor: pointer; touch-action: manipulation; }
+                .toggle-btn { background: var(--border-default); border-radius: 999px; width: 64px; height: 32px; position: relative; cursor: pointer; transition: background 0.3s; flex-shrink: 0; }
                 .toggle-btn.active { background: var(--accent); }
                 .toggle-circle { position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: transform 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
                 .toggle-btn.active .toggle-circle { transform: translateX(32px); }

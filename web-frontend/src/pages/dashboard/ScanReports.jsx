@@ -52,21 +52,14 @@ export default function ScanReports() {
   };
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', height: '100%', boxSizing: 'border-box' }}>
-      <h1 style={{ fontSize: '1.5rem', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '24px' }}>
+    <div style={{ padding: 'clamp(16px, 3vw, 24px)', display: 'flex', flexDirection: 'column', height: '100%', boxSizing: 'border-box' }}>
+      <h1 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '20px' }}>
         Scan Reports
       </h1>
       
-      <div style={{ 
-        display: 'flex', 
-        gap: '24px', 
-        flex: 1, 
-        minHeight: 0,
-        flexDirection: window.innerWidth < 768 ? 'column' : 'row' 
-      }}>
+      <div className="flex flex-col md:flex-row gap-5 flex-1 min-h-0">
         {/* Left Panel: List */}
-        <Card style={{ 
-          width: window.innerWidth < 768 ? '100%' : '320px',
+        <Card className="w-full md:w-80 flex-shrink-0" style={{ 
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
