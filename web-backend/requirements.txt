@@ -11,5 +11,6 @@ slowapi
 pytest
 httpx
 python-multipart
+psycopg[binary]
 psycopg2-binary
 bcrypt==3.2.2
