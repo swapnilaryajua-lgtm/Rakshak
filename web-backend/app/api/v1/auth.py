@@ -43,6 +43,9 @@ def login_access_token(db: Session = Depends(get_db), form_data: OAuth2PasswordR
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect email or password")
     
+    if getattr(user, "is_blocked", False):
+        raise HTTPException(status_code=403, detail="Your account has been blocked by an administrator")
+    
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires

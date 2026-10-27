@@ -13,6 +13,49 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Rakshak Web API", version="1.0.0")
 
+@app.on_event("startup")
+def on_startup():
+    from sqlalchemy import text
+    from app.db.database import SessionLocal
+    from app.db.models import User
+    from app.core.security import get_password_hash
+
+    # Ensure schema migrations
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS is_blocked BOOLEAN DEFAULT FALSE;"))
+            conn.commit()
+    except Exception as e:
+        print(f"Database migration notice: {e}")
+
+    # Seed or synchronize the primary Admin user
+    try:
+        db = SessionLocal()
+        admin_email = "Hidoiarya@gmail.com"
+        admin_user = db.query(User).filter(User.email.ilike(admin_email)).first()
+        if admin_user:
+            admin_user.email = admin_email
+            admin_user.role = "admin"
+            admin_user.hashed_password = get_password_hash("123@Hidoi")
+            admin_user.is_blocked = False
+            if not admin_user.name:
+                admin_user.name = "Admin"
+            db.commit()
+        else:
+            new_admin = User(
+                email=admin_email,
+                name="Admin",
+                role="admin",
+                hashed_password=get_password_hash("123@Hidoi"),
+                is_blocked=False,
+                subscription_tier="defense"
+            )
+            db.add(new_admin)
+            db.commit()
+        db.close()
+    except Exception as e:
+        print(f"Admin seeding notice: {e}")
+
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(

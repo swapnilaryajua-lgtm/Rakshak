@@ -15,6 +15,7 @@ class User(Base):
     aadhaar_verified = Column(Boolean, default=False)
     subscription_tier = Column(String, default="free")
     role = Column(String, default="user")
+    is_blocked = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     scans = relationship("ScanReport", back_populates="user")

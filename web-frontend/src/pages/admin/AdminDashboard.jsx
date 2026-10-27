@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Users, CreditCard, Radar, IndianRupee } from 'lucide-react';
+import { Users, CreditCard, Radar, IndianRupee, ShieldAlert, UserCheck } from 'lucide-react';
 import StatCard from '../../components/StatCard';
 import Card from '../../components/Card';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -32,10 +32,10 @@ export default function AdminDashboard() {
     );
   }
 
-  const freeCount = 743;
-  const proCount = 389;
-  const defenseCount = 115;
-  const totalSubscribers = freeCount + proCount + defenseCount;
+  const freeCount = stats?.subscriptions?.free ?? 0;
+  const proCount = stats?.subscriptions?.pro ?? 0;
+  const defenseCount = stats?.subscriptions?.defense ?? 0;
+  const totalSubscribers = Math.max(1, freeCount + proCount + defenseCount);
 
   return (
     <div style={{ 
@@ -52,38 +52,51 @@ export default function AdminDashboard() {
         }
       `}</style>
       
-      <h1 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '24px', marginTop: 0 }}>
-        Admin Overview
-      </h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <div>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: '600', margin: 0 }}>
+            Admin Overview & Analytics
+          </h1>
+          <p style={{ margin: '4px 0 0 0', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
+            System-wide security scan metrics and user management control
+          </p>
+        </div>
+      </div>
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '24px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+        gap: '20px',
         marginBottom: '32px'
       }}>
         <StatCard 
           variant="dark"
+          title="Total Scans (All Time)" 
+          value={(stats?.totalScans ?? 0).toLocaleString()} 
+          icon={<Radar size={24} style={{ color: 'var(--accent)' }} />} 
+        />
+        <StatCard 
+          variant="dark"
           title="Total Users" 
-          value="1,247" 
+          value={(stats?.totalUsers ?? 0).toLocaleString()} 
           icon={<Users size={24} />} 
         />
         <StatCard 
           variant="dark"
-          title="Active Subscriptions" 
-          value="504" 
-          icon={<CreditCard size={24} />} 
+          title="Active Users" 
+          value={(stats?.activeUsers ?? 0).toLocaleString()} 
+          icon={<UserCheck size={24} style={{ color: '#16A34A' }} />} 
         />
         <StatCard 
           variant="dark"
-          title="Scans Today" 
-          value="127" 
-          icon={<Radar size={24} />} 
+          title="Blocked Users" 
+          value={(stats?.blockedUsers ?? 0).toLocaleString()} 
+          icon={<ShieldAlert size={24} style={{ color: '#EF4444' }} />} 
         />
         <StatCard 
           variant="dark"
-          title="MRR" 
-          value="₹1,24,700" 
+          title="Estimated MRR" 
+          value={`₹${(stats?.revenue?.mrr ?? 0).toLocaleString('en-IN')}`} 
           icon={<IndianRupee size={24} />} 
         />
       </div>

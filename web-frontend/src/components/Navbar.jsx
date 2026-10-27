@@ -6,7 +6,7 @@ import Button from './Button';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -101,7 +101,8 @@ const Navbar = () => {
     { name: 'Account', path: '/dashboard/account' }
   ];
 
-  const links = user ? [...publicLinks, ...dashboardLinks] : publicLinks;
+  const adminLinks = isAdmin ? [{ name: 'Admin Portal', path: '/admin' }] : [];
+  const links = user ? [...publicLinks, ...dashboardLinks, ...adminLinks] : publicLinks;
 
   return (
     <motion.nav 

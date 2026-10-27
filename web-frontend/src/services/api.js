@@ -51,6 +51,18 @@ export async function getAdminDashboardStats() {
   return await authFetch('/api/v1/admin/stats');
 }
 
+export async function blockUser(userId) {
+  return await authFetch(`/api/v1/admin/users/${userId}/block`, {
+    method: 'POST',
+  });
+}
+
+export async function unblockUser(userId) {
+  return await authFetch(`/api/v1/admin/users/${userId}/unblock`, {
+    method: 'POST',
+  });
+}
+
 /* ════════════════════════════════════════════
    PAYMENTS (Razorpay mock)
    ════════════════════════════════════════════ */

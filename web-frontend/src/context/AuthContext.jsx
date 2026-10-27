@@ -16,19 +16,6 @@ export function AuthProvider({ children }) {
         return;
       }
 
-      // Mock admin session
-      if (token === 'mock_admin_token') {
-        setUser({
-          id: 'admin_123',
-          email: 'admin@rakshak.io',
-          name: 'Demo Admin',
-          role: 'admin',
-          subscription_tier: 'pro'
-        });
-        setLoading(false);
-        return;
-      }
-
       try {
         const userData = await authFetch('/api/v1/users/me');
         setUser(userData);
@@ -68,7 +55,7 @@ export function AuthProvider({ children }) {
     // Fetch profile
     const userData = await authFetch('/api/v1/users/me');
     setUser(userData);
-    return true;
+    return userData;
   }, []);
 
   const register = useCallback(async (name, email, password, aadhaar_verified = false) => {
@@ -80,20 +67,6 @@ export function AuthProvider({ children }) {
     return await login(email, password);
   }, [login]);
 
-  const loginAsAdmin = useCallback(async () => {
-    const mockAdmin = {
-      id: 'admin_123',
-      email: 'admin@rakshak.io',
-      name: 'Demo Admin',
-      role: 'admin',
-      subscription_tier: 'pro'
-    };
-    
-    localStorage.setItem('access_token', 'mock_admin_token');
-    setUser(mockAdmin);
-    return true;
-  }, []);
-
   const logout = useCallback(() => {
     localStorage.removeItem('access_token');
     setUser(null);
@@ -102,12 +75,11 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     isAuthenticated: !!user,
-    isAdmin: user?.role === 'admin',
+    isAdmin: user?.role === 'admin' && user?.email?.toLowerCase() === 'hidoiarya@gmail.com',
     isPremium: user?.subscription_tier === 'pro' || user?.subscription_tier === 'defense',
     loading,
     login,
     register,
-    loginAsAdmin,
     logout,
   };
 

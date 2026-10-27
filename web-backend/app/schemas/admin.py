@@ -7,6 +7,7 @@ class AdminUserResponse(BaseModel):
     email: str
     plan: str
     status: str
+    is_blocked: bool = False
     scans: int
     joinedAt: str
 
@@ -32,6 +33,7 @@ class SystemHealthStats(BaseModel):
 class AdminDashboardStats(BaseModel):
     totalUsers: int
     activeUsers: int
+    blockedUsers: int = 0
     totalScans: int
     scansToday: int
     revenue: RevenueStats

@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 
 export default function Login() {
     const navigate = useNavigate();
-    const { login, loginAsAdmin } = useAuth() || { login: async () => {}, loginAsAdmin: async () => {} };
+    const { login } = useAuth() || { login: async () => {} };
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -17,23 +17,17 @@ export default function Login() {
         setError(null);
         setLoading(true);
         try {
-            await login(email, password);
-            navigate('/dashboard');
+            const userData = await login(email, password);
+            if (userData?.role === 'admin' && userData?.email?.toLowerCase() === 'hidoiarya@gmail.com') {
+                navigate('/admin');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
             console.error('Login failed', err);
             setError(err.message || 'Invalid email or password');
         } finally {
             setLoading(false);
-        }
-    };
-
-    const handleAdminLogin = async (e) => {
-        e.preventDefault();
-        try {
-            await loginAsAdmin();
-            navigate('/admin');
-        } catch (error) {
-            console.error('Admin login failed', error);
         }
     };
 
@@ -83,15 +77,6 @@ export default function Login() {
 
                 <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: 'var(--text-secondary, #57534E)' }}>
                     Don't have an account? <Link to="/register" style={{ color: 'var(--accent, #0D9488)', fontWeight: 600, textDecoration: 'none' }}>Sign up</Link>
-                </div>
-
-                <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid var(--border-default, #E7E5E4)', textAlign: 'center' }}>
-                    <button 
-                        onClick={handleAdminLogin} 
-                        style={{ background: 'none', border: 'none', color: 'var(--text-muted, #A8A29E)', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
-                    >
-                        Demo: Login as Admin
-                    </button>
                 </div>
             </Card>
         </div>
