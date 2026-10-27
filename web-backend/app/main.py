@@ -1,6 +1,8 @@
+import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from app.api.v1 import auth, scans, users, payments, admin
@@ -35,6 +37,32 @@ app.include_router(users.router, prefix="/api/v1/users", tags=["users"])
 app.include_router(payments.router, prefix="/api/v1/payments", tags=["payments"])
 app.include_router(admin.router, prefix="/api/v1/admin", tags=["admin"])
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to Rakshak API"}
+# Frontend static files (SPA) - check web-frontend/dist first, then web-backend/static
+candidates = [
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "web-frontend", "dist")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "static")),
+]
+static_dir = next((d for d in candidates if os.path.isdir(d)), None)
+
+if os.path.isdir(static_dir):
+    assets_dir = os.path.join(static_dir, "assets")
+    if os.path.isdir(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/api")
+    def api_root():
+        return {"message": "Welcome to Rakshak API"}
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        # Allow API routes to be handled by routers
+        if full_path.startswith("api/"):
+            return JSONResponse(status_code=404, content={"detail": "Not Found"})
+        file_path = os.path.join(static_dir, full_path)
+        if full_path and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(static_dir, "index.html"))
+else:
+    @app.get("/")
+    def read_root():
+        return {"message": "Welcome to Rakshak API"}
