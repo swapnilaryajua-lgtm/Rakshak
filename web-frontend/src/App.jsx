@@ -21,6 +21,7 @@ import Account from './pages/dashboard/Account.jsx';
 /* ── Admin Pages ── */
 import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 import AdminUsers from './pages/admin/AdminUsers.jsx';
+import AdminActivity from './pages/admin/AdminActivity.jsx';
 
 export default function App() {
   return (
@@ -57,6 +58,7 @@ export default function App() {
       >
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/activity" element={<AdminActivity />} />
       </Route>
 
       {/* ═══ Fallback ═══ */}

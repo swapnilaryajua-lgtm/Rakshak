@@ -13,6 +13,7 @@ export default function AdminLayout({ children }) {
   const sidebarItems = [
     { label: 'Overview', path: '/admin', icon: BarChart3 },
     { label: 'Users', path: '/admin/users', icon: Users },
+    { label: 'Activity Updates', path: '/admin/activity', icon: Activity },
   ];
 
   const getPageTitle = () => {

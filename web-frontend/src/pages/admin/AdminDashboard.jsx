@@ -655,7 +655,41 @@ export default function AdminDashboard() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }}>
-            {/* Action 1 */}
+            {/* Action 1: Activity Updates */}
+            <Link
+              to="/admin/activity"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '14px 16px',
+                borderRadius: '12px',
+                backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid #1E2738',
+                color: '#F8FAFC',
+                textDecoration: 'none',
+                transition: 'all 0.15s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(56, 189, 248, 0.12)';
+                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
+                e.currentTarget.style.borderColor = '#1E2738';
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Activity size={18} color="#38BDF8" />
+                <div>
+                  <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>Platform Activity Updates Feed</div>
+                  <div style={{ fontSize: '12px', color: '#94A3B8' }}>Inspect live login, logout, scan execution, and account join timeline</div>
+                </div>
+              </div>
+              <ChevronRight size={18} color="#64748B" />
+            </Link>
+
+            {/* Action 2: User Quarantine */}
             <Link
               to="/admin/users"
               style={{

@@ -58,6 +58,11 @@ export async function getAdminDashboardStats() {
   return await authFetch('/api/v1/admin/stats');
 }
 
+export async function getAdminActivity(params = {}) {
+  const query = new URLSearchParams(params).toString();
+  return await authFetch(`/api/v1/admin/activity?${query}`);
+}
+
 export async function blockUser(userId) {
   return await authFetch(`/api/v1/admin/users/${userId}/block`, {
     method: 'POST',

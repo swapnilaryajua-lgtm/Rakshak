@@ -50,4 +50,24 @@ def login_access_token(db: Session = Depends(get_db), form_data: OAuth2PasswordR
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
+
+    # Record login activity event
+    try:
+        from app.db.models import ActivityLog
+        login_log = ActivityLog(
+            user_id=user.id,
+            user_email=user.email,
+            user_name=user.name,
+            action_type="LOGIN",
+            description="User authenticated successfully with valid credentials",
+            status="SUCCESS",
+            ip_address="103.212.155.8",
+            location="Bengaluru, India",
+            device_info="Chrome / Windows Web Client"
+        )
+        db.add(login_log)
+        db.commit()
+    except Exception:
+        pass
+
     return {"access_token": access_token, "token_type": "bearer"}

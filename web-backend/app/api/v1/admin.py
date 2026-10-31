@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import not_, or_
 from app.db.database import get_db
-from app.db.models import User, ScanReport, Subscription
+from app.db.models import User, ScanReport, Subscription, ActivityLog
 from app.schemas.admin import AdminUserResponse, AdminDashboardStats, RevenueStats, SubscriptionsStats, SystemHealthStats
 from app.schemas.pagination import PaginatedResponse
 from app.core.dependencies import get_admin_user
@@ -85,6 +85,70 @@ def unblock_user(
     db.commit()
     db.refresh(target_user)
     return {"message": f"User {target_user.email} has been unblocked successfully", "is_blocked": False}
+
+@router.get("/activity")
+def get_admin_activity(
+    page: int = Query(1, ge=1),
+    limit: int = Query(50, ge=1, le=100),
+    action: str = Query("ALL"),
+    search: str = Query(None),
+    current_admin: User = Depends(get_admin_user),
+    db: Session = Depends(get_db)
+):
+    offset = (page - 1) * limit
+    query = db.query(ActivityLog)
+    
+    if action and action.upper() != "ALL":
+        query = query.filter(ActivityLog.action_type == action.upper())
+        
+    if search and search.strip():
+        term = f"%{search.strip()}%"
+        query = query.filter(
+            or_(
+                ActivityLog.user_email.ilike(term),
+                ActivityLog.user_name.ilike(term),
+                ActivityLog.description.ilike(term),
+                ActivityLog.location.ilike(term),
+                ActivityLog.ip_address.ilike(term)
+            )
+        )
+        
+    total = query.count()
+    items_db = query.order_by(ActivityLog.created_at.desc()).offset(offset).limit(limit).all()
+    
+    items = []
+    for item in items_db:
+        items.append({
+            "id": item.id,
+            "userId": item.user_id,
+            "userEmail": item.user_email,
+            "userName": item.user_name or item.user_email.split('@')[0],
+            "actionType": item.action_type,
+            "description": item.description,
+            "status": item.status,
+            "ipAddress": item.ip_address or "—",
+            "location": item.location or "India",
+            "deviceInfo": item.device_info or "Web Browser",
+            "timestamp": item.created_at.isoformat() if item.created_at else "",
+            "timeFormatted": item.created_at.strftime("%b %d, %Y • %I:%M %p") if item.created_at else ""
+        })
+        
+    total_logins = db.query(ActivityLog).filter(ActivityLog.action_type == "LOGIN").count()
+    total_scans_logged = db.query(ActivityLog).filter(ActivityLog.action_type == "SCAN_COMPLETED").count()
+    total_registrations = db.query(ActivityLog).filter(ActivityLog.action_type == "USER_REGISTERED").count()
+    
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "limit": limit,
+        "summary": {
+            "totalActivities": total,
+            "totalLogins": total_logins,
+            "totalScansLogged": total_scans_logged,
+            "totalRegistrations": total_registrations
+        }
+    }
 
 @router.get("/stats", response_model=AdminDashboardStats)
 def get_dashboard_stats(current_admin: User = Depends(get_admin_user), db: Session = Depends(get_db)):

@@ -48,3 +48,21 @@ class Subscription(Base):
     renewed_at = Column(DateTime, default=datetime.utcnow)
     
     user = relationship("User", back_populates="subscriptions")
+
+
+class ActivityLog(Base):
+    __tablename__ = "activity_logs"
+    
+    id = Column(String, primary_key=True, default=lambda: f"act_{uuid.uuid4().hex[:12]}")
+    user_id = Column(String, ForeignKey("users.id"), nullable=True)
+    user_email = Column(String, nullable=False, index=True)
+    user_name = Column(String, nullable=True)
+    action_type = Column(String, nullable=False, index=True)  # LOGIN, LOGOUT, SCAN_STARTED, SCAN_COMPLETED, USER_REGISTERED, USER_BLOCKED, USER_UNBLOCKED, PASSWORD_UPDATED
+    description = Column(String, nullable=False)
+    status = Column(String, default="SUCCESS")  # SUCCESS, WARNING, INFO, ERROR
+    ip_address = Column(String, nullable=True)
+    location = Column(String, nullable=True)
+    device_info = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    
+    user = relationship("User", backref="activities")
