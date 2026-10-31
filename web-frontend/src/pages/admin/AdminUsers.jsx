@@ -91,11 +91,11 @@ export default function AdminUsers() {
   const getPlanBadge = (plan) => {
     const p = (plan || 'Free').toLowerCase();
     if (p === 'pro') {
-      return <span style={{ backgroundColor: 'var(--accent, #0D9488)', color: 'white', padding: '2px 8px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: '600' }}>Pro</span>;
+      return <span style={{ backgroundColor: 'rgba(13, 148, 136, 0.2)', border: '1px solid rgba(13, 148, 136, 0.4)', color: '#2DD4BF', padding: '3px 10px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '0.3px' }}>Pro</span>;
     } else if (p === 'defense') {
-      return <span style={{ backgroundColor: '#1C1917', border: '1px solid var(--accent, #0D9488)', color: 'var(--accent, #0D9488)', padding: '1px 7px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: '600' }}>Defense</span>;
+      return <span style={{ backgroundColor: 'rgba(99, 102, 241, 0.2)', border: '1px solid rgba(99, 102, 241, 0.4)', color: '#A5B4FC', padding: '3px 10px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '0.3px' }}>Defense</span>;
     }
-    return <span style={{ backgroundColor: '#78716C', color: 'white', padding: '2px 8px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: '600' }}>Free</span>;
+    return <span style={{ backgroundColor: 'rgba(148, 163, 184, 0.12)', border: '1px solid rgba(148, 163, 184, 0.25)', color: '#CBD5E1', padding: '3px 10px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: '600' }}>Free</span>;
   };
 
   return (
@@ -217,13 +217,13 @@ export default function AdminUsers() {
         <div className="touch-scroll" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid var(--border-admin)', backgroundColor: '#353130' }}>
-                <th style={{ padding: '12px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '600' }}>User</th>
-                <th style={{ padding: '12px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '600' }}>Plan</th>
-                <th style={{ padding: '12px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '600' }}>Status</th>
-                <th style={{ padding: '12px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '600' }}>Scans Completed</th>
-                <th style={{ padding: '12px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '600' }}>Joined</th>
-                <th style={{ padding: '12px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '600', textAlign: 'right' }}>Actions</th>
+              <tr style={{ borderBottom: '1px solid #1E2738', backgroundColor: '#0B0F17' }}>
+                <th style={{ padding: '14px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>User Identity</th>
+                <th style={{ padding: '14px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Plan</th>
+                <th style={{ padding: '14px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Account Status</th>
+                <th style={{ padding: '14px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Scans Completed</th>
+                <th style={{ padding: '14px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Joined Date</th>
+                <th style={{ padding: '14px 24px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px', textAlign: 'right' }}>Security Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -243,8 +243,8 @@ export default function AdminUsers() {
                     <tr 
                       key={user.id} 
                       style={{ 
-                        borderBottom: '1px solid var(--border-admin)',
-                        backgroundColor: idx % 2 === 0 ? 'var(--bg-admin-card)' : '#322E2D',
+                        borderBottom: '1px solid #1E2738',
+                        backgroundColor: idx % 2 === 0 ? '#111622' : '#0E131F',
                         transition: 'background-color 0.2s ease',
                       }}
                     >

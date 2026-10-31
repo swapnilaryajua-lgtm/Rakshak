@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+from sqlalchemy import not_, or_
 from app.db.database import get_db
 from app.db.models import User, ScanReport, Subscription
 from app.schemas.admin import AdminUserResponse, AdminDashboardStats, RevenueStats, SubscriptionsStats, SystemHealthStats
@@ -7,6 +8,16 @@ from app.schemas.pagination import PaginatedResponse
 from app.core.dependencies import get_admin_user
 
 router = APIRouter()
+
+def is_test_user_condition():
+    """Condition to exclude automated test/agent logins from the admin panel."""
+    return or_(
+        User.email.ilike("%test%"),
+        User.email.ilike("%example.%"),
+        User.email.ilike("%agent%"),
+        User.name.ilike("%test%"),
+        User.name.ilike("%agent%")
+    )
 
 @router.get("/users", response_model=PaginatedResponse[AdminUserResponse])
 def get_all_users(
@@ -16,7 +27,8 @@ def get_all_users(
     db: Session = Depends(get_db)
 ):
     offset = (page - 1) * limit
-    users_query = db.query(User)
+    # Exclude test/agent accounts from user management
+    users_query = db.query(User).filter(not_(is_test_user_condition()))
     total = users_query.count()
     users = users_query.order_by(User.created_at.desc()).offset(offset).limit(limit).all()
     
@@ -76,13 +88,18 @@ def unblock_user(
 
 @router.get("/stats", response_model=AdminDashboardStats)
 def get_dashboard_stats(current_admin: User = Depends(get_admin_user), db: Session = Depends(get_db)):
-    total_users = db.query(User).count()
-    blocked_users = db.query(User).filter(User.is_blocked == True).count()
+    # Filter out test/agent logins from telemetry
+    real_users_query = db.query(User).filter(not_(is_test_user_condition()))
+    total_users = real_users_query.count()
+    blocked_users = real_users_query.filter(User.is_blocked == True).count()
     active_users = max(0, total_users - blocked_users)
-    total_scans = db.query(ScanReport).count()
     
-    pro_users = db.query(User).filter(User.subscription_tier == "pro").count()
-    defense_users = db.query(User).filter(User.subscription_tier == "defense").count()
+    # Exclude scans initiated by test/agent accounts
+    test_user_ids = db.query(User.id).filter(is_test_user_condition()).subquery()
+    total_scans = db.query(ScanReport).filter(~ScanReport.user_id.in_(test_user_ids)).count()
+    
+    pro_users = real_users_query.filter(User.subscription_tier == "pro").count()
+    defense_users = real_users_query.filter(User.subscription_tier == "defense").count()
     free_users = max(0, total_users - pro_users - defense_users)
     
     return {

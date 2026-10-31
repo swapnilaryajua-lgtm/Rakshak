@@ -20,10 +20,13 @@ def on_startup():
     from app.db.models import User
     from app.core.security import get_password_hash
 
-    # Ensure schema migrations
+    # Ensure schema migrations and purge old test/agent logins
     try:
         with engine.connect() as conn:
             conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS is_blocked BOOLEAN DEFAULT FALSE;"))
+            # Purge any test login or synthetic agent test records from old logs/database
+            conn.execute(text("DELETE FROM scan_reports WHERE user_id IN (SELECT id FROM users WHERE email ILIKE '%test%' OR email ILIKE '%example.%' OR email ILIKE '%agent%');"))
+            conn.execute(text("DELETE FROM users WHERE email ILIKE '%test%' OR email ILIKE '%example.%' OR email ILIKE '%agent%';"))
             conn.commit()
     except Exception as e:
         print(f"Database migration notice: {e}")

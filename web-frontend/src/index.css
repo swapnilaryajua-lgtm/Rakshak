@@ -10,17 +10,17 @@
   --color-bg-primary: #FCFBF9;
   --color-bg-secondary: #F5F4F0;
   --color-bg-card: #FFFFFF;
-  --color-bg-admin: #FCFBF9;
-  --color-bg-admin-card: #FFFFFF;
+  --color-bg-admin: #0A0D14;
+  --color-bg-admin-card: #111622;
 
   --color-text-primary: #1A1A1A;
   --color-text-secondary: #4A4A4A;
   --color-text-muted: #8A8A8A;
-  --color-text-admin: #1A1A1A;
-  --color-text-admin-muted: #8A8A8A;
+  --color-text-admin: #F8FAFC;
+  --color-text-admin-muted: #94A3B8;
 
   --color-border-default: #E5E4E2;
-  --color-border-admin: #E5E4E2;
+  --color-border-admin: #1E2738;
 
   /* ── Accent (Forest Green) ── */
   --color-accent: #047857;

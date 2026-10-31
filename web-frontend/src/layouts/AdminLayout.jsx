@@ -30,7 +30,7 @@ export default function AdminLayout({ children }) {
       height: '100vh', 
       width: '100%',
       overflow: 'hidden', 
-      backgroundColor: 'var(--bg-admin, #1C1917)',
+      backgroundColor: '#0A0D14',
       fontFamily: '"Plus Jakarta Sans", sans-serif'
     }}>
       {/* Desktop Sidebar (hidden on mobile and tablet < 1024px) */}
@@ -47,7 +47,7 @@ export default function AdminLayout({ children }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.75)', zIndex: 60, backdropFilter: 'blur(3px)' }}
+              style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 60, backdropFilter: 'blur(4px)' }}
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.aside
@@ -62,10 +62,10 @@ export default function AdminLayout({ children }) {
                 bottom: 0,
                 width: '280px',
                 maxWidth: '80vw',
-                backgroundColor: 'var(--bg-admin, #1C1917)',
+                backgroundColor: '#0D111A',
                 zIndex: 70,
-                boxShadow: '8px 0 32px rgba(0,0,0,0.6)',
-                borderRight: '1px solid var(--border-admin, #44403C)',
+                boxShadow: '8px 0 32px rgba(0,0,0,0.7)',
+                borderRight: '1px solid #1E2738',
                 display: 'flex',
                 flexDirection: 'column'
               }}
@@ -75,7 +75,7 @@ export default function AdminLayout({ children }) {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '16px 20px',
-                borderBottom: '1px solid var(--border-admin, #44403C)'
+                borderBottom: '1px solid #1E2738'
               }}>
                 <span style={{
                   padding: '4px 8px',
@@ -94,7 +94,7 @@ export default function AdminLayout({ children }) {
                   style={{
                     background: 'none',
                     border: 'none',
-                    color: 'var(--text-muted, #A8A29E)',
+                    color: '#94A3B8',
                     cursor: 'pointer',
                     padding: '8px',
                     display: 'flex',
@@ -109,19 +109,20 @@ export default function AdminLayout({ children }) {
                 <Sidebar variant="admin" items={sidebarItems} />
               </div>
 
-              <div style={{ padding: '16px', borderTop: '1px solid var(--border-admin, #44403C)' }}>
+              <div style={{ padding: '16px', borderTop: '1px solid #1E2738' }}>
                 <Link
                   to="/"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    color: 'var(--text-muted, #A8A29E)',
+                    color: '#94A3B8',
                     textDecoration: 'none',
                     fontSize: '13px',
                     padding: '10px 12px',
-                    borderRadius: '6px',
-                    backgroundColor: 'rgba(255,255,255,0.04)'
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.06)'
                   }}
                 >
                   <ArrowLeft size={16} /> Return to Main Site
@@ -140,10 +141,10 @@ export default function AdminLayout({ children }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 16px',
-          backgroundColor: 'var(--bg-admin, #1C1917)',
-          borderBottom: '1px solid var(--border-admin, #44403C)',
-          color: 'var(--text-admin, #FAFAF9)',
+          padding: '0 20px',
+          backgroundColor: '#0D111A',
+          borderBottom: '1px solid #1E2738',
+          color: '#F8FAFC',
           boxSizing: 'border-box'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -154,7 +155,7 @@ export default function AdminLayout({ children }) {
               style={{
                 background: 'none',
                 border: 'none',
-                color: 'var(--text-admin, #FAFAF9)',
+                color: '#F8FAFC',
                 cursor: 'pointer',
                 padding: '8px',
                 borderRadius: '6px',
@@ -189,9 +190,9 @@ export default function AdminLayout({ children }) {
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
               }}>
-                Admin
+                ADMIN
               </span>
-              <span className="hidden sm:inline">{getPageTitle()}</span>
+              <span className="hidden sm:inline" style={{ color: '#F8FAFC' }}>{getPageTitle()}</span>
             </h1>
           </div>
 
@@ -200,23 +201,26 @@ export default function AdminLayout({ children }) {
               to="/"
               className="hidden md:flex"
               style={{
-                color: 'var(--text-muted, #A8A29E)',
+                color: '#94A3B8',
                 fontSize: '13px',
                 textDecoration: 'none',
-                padding: '4px 10px',
+                padding: '5px 12px',
                 borderRadius: '6px',
-                border: '1px solid var(--border-admin, #44403C)'
+                border: '1px solid #1E2738',
+                backgroundColor: 'rgba(255,255,255,0.03)',
+                transition: 'all 0.15s ease'
               }}
             >
               Back to App
             </Link>
             <span style={{ 
               fontSize: '13px', 
-              color: 'var(--text-muted, #A8A29E)',
-              maxWidth: '120px',
+              color: '#94A3B8',
+              maxWidth: '140px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontWeight: 500
             }}>
               {user?.name || user?.email}
             </span>
@@ -224,12 +228,13 @@ export default function AdminLayout({ children }) {
               onClick={logout}
               style={{ 
                 display: 'flex', alignItems: 'center', gap: '6px', 
-                background: 'none', border: 'none', cursor: 'pointer',
-                color: '#F43F5E', fontSize: '13px', fontWeight: 500,
-                padding: '8px 10px', minHeight: '36px'
+                background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.25)', cursor: 'pointer',
+                color: '#F87171', fontSize: '13px', fontWeight: 600,
+                padding: '6px 12px', minHeight: '34px', borderRadius: '6px',
+                transition: 'all 0.15s ease'
               }}
             >
-              <LogOut size={15} />
+              <LogOut size={14} />
               <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
@@ -242,8 +247,8 @@ export default function AdminLayout({ children }) {
             flex: 1,
             overflowY: 'auto',
             padding: 'clamp(16px, 3vw, 32px)',
-            backgroundColor: 'var(--bg-admin-card, #292524)',
-            color: 'var(--text-admin, #FAFAF9)',
+            backgroundColor: '#0A0D14',
+            color: '#F8FAFC',
             boxSizing: 'border-box'
           }}
         >
