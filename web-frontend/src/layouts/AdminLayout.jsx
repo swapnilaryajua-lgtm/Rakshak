@@ -242,10 +242,12 @@ export default function AdminLayout({ children }) {
 
         {/* Main scrollable content container */}
         <main 
-          className="touch-scroll"
           style={{
             flex: 1,
             overflowY: 'auto',
+            overflowX: 'hidden',
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehavior: 'auto',
             padding: 'clamp(16px, 3vw, 32px)',
             backgroundColor: '#0A0D14',
             color: '#F8FAFC',

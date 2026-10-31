@@ -50,14 +50,13 @@ const Navbar = () => {
     { name: 'Download', path: '/download' },
   ];
 
-  const dashboardLinks = [
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Scan Reports', path: '/dashboard/reports' },
-    { name: 'Account', path: '/dashboard/account' },
+  const userLinks = [
+    { name: 'Scan History', path: '/history' },
+    { name: 'Account', path: '/account' },
   ];
 
   const adminLinks = isAdmin ? [{ name: 'Admin Portal', path: '/admin' }] : [];
-  const links = user ? [...publicLinks, ...dashboardLinks, ...adminLinks] : publicLinks;
+  const links = user ? [...publicLinks, ...userLinks, ...adminLinks] : publicLinks;
 
   const getLinkStyle = (path, isMobileDrawer = false) => {
     const isActive = location.pathname === path;
@@ -305,7 +304,7 @@ const Navbar = () => {
                     </Link>
                   )}
                   <Link
-                    to="/dashboard/account"
+                    to="/account"
                     style={{
                       display: 'flex',
                       alignItems: 'center',

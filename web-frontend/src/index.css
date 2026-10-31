@@ -138,7 +138,7 @@ input, select, textarea, button {
 /* Mobile smooth touch scrolling */
 .touch-scroll {
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
+  overscroll-behavior: auto;
 }
 
 /* Sleek custom scrollbars */

@@ -213,8 +213,8 @@ export default function AdminUsers() {
           </div>
         </div>
 
-        {/* Table wrapper */}
-        <div className="touch-scroll" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        {/* Table wrapper - overscrollBehavior: auto ensures parent page scrolls when wheel is over table */}
+        <div style={{ overflowX: 'auto', overflowY: 'visible', WebkitOverflowScrolling: 'touch', overscrollBehavior: 'auto', overscrollBehaviorY: 'auto' }}>
           <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid #1E2738', backgroundColor: '#0B0F17' }}>

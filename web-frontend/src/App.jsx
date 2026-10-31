@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 
 import PublicLayout from './layouts/PublicLayout.jsx';
 import AdminLayout from './layouts/AdminLayout.jsx';
@@ -14,9 +14,8 @@ import Download from './pages/public/Download.jsx';
 import Login from './pages/public/Login.jsx';
 import Register from './pages/public/Register.jsx';
 
-/* ── Dashboard Pages ── */
-import DashboardHome from './pages/dashboard/DashboardHome.jsx';
-import ScanReports from './pages/dashboard/ScanReports.jsx';
+/* ── User Protection & Audit Pages ── */
+import History from './pages/dashboard/History.jsx';
 import Account from './pages/dashboard/Account.jsx';
 
 /* ── Admin Pages ── */
@@ -36,16 +35,19 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
-        {/* ═══ User Dashboard Routes (auth required) ═══ */}
+        {/* ═══ Authenticated User Pages (Auth Required) ═══ */}
         <Route element={<RequireAuth><Outlet /></RequireAuth>}>
-          <Route path="/dashboard" element={<DashboardHome />} />
-          <Route path="/dashboard/reports" element={<ScanReports />} />
-          <Route path="/dashboard/scan" element={<Scan />} />
-          <Route path="/dashboard/account" element={<Account />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/account" element={<Account />} />
+          {/* Legacy & Dashboard Redirects to History */}
+          <Route path="/dashboard" element={<Navigate to="/history" replace />} />
+          <Route path="/dashboard/reports" element={<Navigate to="/history" replace />} />
+          <Route path="/dashboard/scan" element={<Navigate to="/scan" replace />} />
+          <Route path="/dashboard/account" element={<Navigate to="/account" replace />} />
         </Route>
       </Route>
 
-      {/* ═══ Admin Routes (admin role required) ═══ */}
+      {/* ═══ Admin Routes (Admin Role Required) ═══ */}
       <Route
         element={
           <RequireAdmin>

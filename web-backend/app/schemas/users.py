@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 class UserBase(BaseModel):
@@ -12,6 +12,12 @@ class UserCreate(UserBase):
     password: str
     aadhaar_verified: bool = False
 
+class UserUpdateRequest(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    current_password: Optional[str] = None
+    new_password: Optional[str] = None
+
 class UserResponse(UserBase):
     id: str
     phone: Optional[str] = None
@@ -19,6 +25,7 @@ class UserResponse(UserBase):
     scansThisMonth: int = 0
     scansLimit: int = 50
     createdAt: str
+    aadhaar_verified: Optional[bool] = False
 
     class Config:
         from_attributes = True
@@ -30,4 +37,4 @@ class SubscriptionStatusResponse(BaseModel):
     currency: str = "INR"
     billingCycle: str = "monthly"
     nextBillingDate: Optional[str] = None
-    features: list[str] = []
+    features: List[str] = []

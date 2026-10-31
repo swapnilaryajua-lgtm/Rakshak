@@ -35,6 +35,13 @@ export async function getUserProfile() {
   return await authFetch('/api/v1/users/me');
 }
 
+export async function updateUserProfile(data) {
+  return await authFetch('/api/v1/users/me', {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+
 export async function getSubscriptionStatus() {
   return await authFetch('/api/v1/users/me/subscription');
 }
