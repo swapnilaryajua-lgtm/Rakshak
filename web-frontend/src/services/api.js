@@ -50,8 +50,9 @@ export async function getSubscriptionStatus() {
    ADMIN
    ════════════════════════════════════════════ */
 
-export async function getAdminUsers() {
-  return await authFetch('/api/v1/admin/users');
+export async function getAdminUsers(params = {}) {
+  const query = new URLSearchParams({ limit: 500, ...params }).toString();
+  return await authFetch(`/api/v1/admin/users?${query}`);
 }
 
 export async function getAdminDashboardStats() {

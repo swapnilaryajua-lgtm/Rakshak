@@ -1,140 +1,213 @@
-import React from 'react';
-import { Check, Plus } from 'lucide-react';
-import Button from '../../components/Button.jsx';
-import Card from '../../components/Card.jsx';
-import useScrollReveal from '../../hooks/useScrollReveal.jsx';
+import React, { useState } from 'react';
+import { Plus, Minus, ShieldCheck, Lock, Sparkles, HelpCircle } from 'lucide-react';
+import { Pricing } from '@/components/ui/pricing';
+import useScrollReveal from '@/hooks/useScrollReveal';
 
-export default function Pricing() {
-    const [headerRef, headerVisible] = useScrollReveal();
-    const [cardsRef, cardsVisible] = useScrollReveal();
-    const [faqRef, faqVisible] = useScrollReveal();
+export default function PricingPage() {
+  const [isCompany, setIsCompany] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
+  const [faqRef, faqVisible] = useScrollReveal();
 
-    const [openFaq, setOpenFaq] = React.useState(null);
-    const [isCompany, setIsCompany] = React.useState(false);
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
 
-    const toggleFaq = (index) => {
-        setOpenFaq(openFaq === index ? null : index);
-    };
+  const plans = [
+    {
+      name: "Free Community",
+      badge: "Starter Tier",
+      activePrice: 0,
+      activePeriod: "forever",
+      billingSubtext: "No credit card or commitment required",
+      features: [
+        "4 automated vulnerability scans every day",
+        "OWASP Top 10 heuristic security coverage",
+        "Interactive downloadable audit report summary",
+        "100% Client-side local data privacy",
+        "Community forum knowledgebase access"
+      ],
+      description: "Perfect for developers and hobbyists auditing personal web projects.",
+      buttonText: "Start Free",
+      href: "/scan",
+      isPopular: false,
+      isDark: false,
+      isTopUp: false
+    },
+    {
+      name: "Pro Monitor",
+      badge: "Continuous Shield",
+      activePrice: isCompany ? "₹10,000 – ₹1,00,000" : 10000,
+      activePeriod: "year",
+      billingSubtext: isCompany 
+        ? "Scalable based on company size & monitored targets" 
+        : "Billed annually (₹833/month equivalent)",
+      features: [
+        "Real-time background monitoring daemon",
+        "Unlimited deep vulnerability audits",
+        "Actionable remediation code snippets & CVSS",
+        "Desktop & instant email incident alerting",
+        "Priority 24/7 technical support response",
+        ...(isCompany ? [
+          "Multi-target corporate dashboard",
+          "Team seats & centralized audit logs"
+        ] : [
+          "Single-seat developer license"
+        ])
+      ],
+      description: "Continuous real-time vulnerability monitoring for high-reliability websites.",
+      buttonText: "Available Soon",
+      href: "#",
+      isPopular: true,
+      isDark: false,
+      isTopUp: false
+    },
+    {
+      name: "Defense Active",
+      badge: "Active Countermeasure",
+      activePrice: isCompany ? "Yearly Contract Base" : 12000,
+      activePeriod: isCompany ? "yearly base" : "6 months",
+      billingSubtext: isCompany 
+        ? "Tailored enterprise SLA with dedicated threat retainer" 
+        : "Billed semi-annually (₹2,000/month equivalent)",
+      features: [
+        "Everything included in Pro Monitor",
+        "Autonomous real-time malicious traffic blocking",
+        "Attacker origin IP tracing & forensic telemetry",
+        "Automated local firewall rule enforcement",
+        "Zero-day exploit shielding",
+        ...(isCompany ? [
+          "Dedicated SOC security engineer",
+          "Custom compliance & contractual SLA"
+        ] : [
+          "Full standalone defensive suite"
+        ])
+      ],
+      description: "Active autonomous firewall and attacker neutralization suite.",
+      buttonText: "Available Soon",
+      href: "#",
+      isPopular: false,
+      isDark: true,
+      isTopUp: false
+    },
+    {
+      name: "Scan Top-Ups",
+      badge: "On-Demand Credit",
+      activePrice: isCompany ? "From ₹49" : "From ₹39",
+      activePeriod: "pack",
+      billingSubtext: "Instant scan recharge • Zero recurring commitment",
+      features: [
+        "1 Day Pass: 15 on-demand scans for ₹39",
+        "1 Day Power Pass: 25 on-demand scans for ₹49",
+        "Deep Audit Pack: 50 scans + remediation for ₹99",
+        "Valid across any target domain or URL",
+        "Instant credit activation on your account",
+        "Never expires until credits are consumed"
+      ],
+      description: "Pay-as-you-go scan packages when you need emergency target audits without a monthly plan.",
+      buttonText: "Available Soon",
+      href: "#",
+      isPopular: false,
+      isDark: false,
+      isTopUp: true
+    }
+  ];
 
-    const faqs = [
-        { q: 'Can I upgrade or downgrade anytime?', a: 'Yes, you can change your plan at any time. Prorated charges or credits will be applied automatically.' },
-        { q: 'How does the monitoring software work?', a: 'Our lightweight Windows application runs in the background and monitors your web app traffic locally. No data is sent to our servers.' },
-        { q: 'Is my data stored on your servers?', a: 'No. Scan results and monitoring data remain entirely on your device, ensuring complete privacy.' },
-        { q: 'What payment methods do you accept?', a: 'We accept all major credit cards, UPI, and net banking options through our secure payment gateway.' }
-    ];
+  const faqs = [
+    {
+      q: "How does the Pro version pricing work for Individuals vs Startups?",
+      a: "For individual developers, Pro Monitor is a flat ₹10,000/year (~₹833/month). For startups and growing businesses, pricing flexibly scales between ₹10,000 and ₹1,00,000/year depending on your active endpoints, target applications, and team seat requirements."
+    },
+    {
+      q: "What is the billing cadence for the Defense Active tier?",
+      a: "For individuals, Defense Active is priced at ₹12,000 for 6 months. For startups and enterprises, Defense Active is structured as an annual contract base with customized SLAs, dedicated security engineers, and emergency threat response."
+    },
+    {
+      q: "How do On-Demand Scan Top-Ups work?",
+      a: "If you are on the Free tier and exceed the 4 free scans/day limit, you can purchase an instant Top-Up pack starting at just ₹39 for 15 scans. Credits are added immediately to your account without requiring a recurring monthly or annual commitment."
+    },
+    {
+      q: "Why do the paid subscription buttons say 'Available Soon'?",
+      a: "We are currently completing payment gateway certification and compliance for Indian UPI, NetBanking, and corporate billing. You can enjoy Free Community scans today, and paid subscriptions will unlock shortly."
+    },
+    {
+      q: "Is my application data or target code sent to external servers?",
+      a: "Never. Rakshak operates on a privacy-first architecture where scans, security headers, and network telemetry are processed directly in your local environment."
+    }
+  ];
 
-    return (
-        <div style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', backgroundColor: 'var(--bg-primary, #FAF8F5)', minHeight: 'calc(100vh - 64px)', padding: 'clamp(24px, 5vw, 64px) clamp(16px, 4vw, 24px)', color: 'var(--text-primary, #1C1917)' }}>
-            <style>
-                {`
-                .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-                .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-                .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: stretch; margin-top: 36px; }
-                @media (min-width: 640px) and (max-width: 1023px) { .pricing-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); } }
-                @media (min-width: 1024px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
-                .feature-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; font-size: 14px; color: var(--text-secondary, #57534E); }
-                .pro-card { transform: scale(1); border: 2px solid var(--accent, #0D9488); }
-                @media (min-width: 1024px) { .pro-card { transform: scale(1.02); z-index: 10; } }
-                .faq-item { border-bottom: 1px solid var(--border-default, #E7E5E4); padding: 20px 0; cursor: pointer; touch-action: manipulation; }
-                .faq-q { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: clamp(16px, 2.5vw, 18px); min-height: 44px; }
-                .faq-a { margin-top: 14px; color: var(--text-secondary, #57534E); line-height: 1.6; display: none; font-size: 15px; }
-                .faq-a.open { display: block; }
-                .toggle-container { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 28px 0; font-weight: 600; font-size: 15px; cursor: pointer; touch-action: manipulation; }
-                .toggle-btn { background: var(--border-default); border-radius: 999px; width: 64px; height: 32px; position: relative; cursor: pointer; transition: background 0.3s; flex-shrink: 0; }
-                .toggle-btn.active { background: var(--accent); }
-                .toggle-circle { position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: transform 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-                .toggle-btn.active .toggle-circle { transform: translateX(32px); }
-                `}
-            </style>
+  return (
+    <div className="bg-[#FAF8F5] min-h-[calc(100vh-64px)] py-10 md:py-16 text-neutral-900 font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Main Interactive Pricing Section */}
+        <Pricing
+          plans={plans}
+          title="Simple, Transparent Cybersecurity Pricing"
+          description="Choose the security level your application needs.\nStart with our free community tier, or upgrade for automated real-time defense."
+          isCompany={isCompany}
+          setIsCompany={setIsCompany}
+        />
 
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                <div ref={headerRef} className={`animate-on-scroll ${headerVisible ? 'is-visible' : ''}`} style={{ textAlign: 'center', marginBottom: '24px' }}>
-                    <h1 style={{ fontSize: '40px', fontWeight: 800, marginBottom: '16px' }}>Simple, Transparent Pricing</h1>
-                    <p style={{ fontSize: '18px', color: 'var(--text-secondary, #57534E)', maxWidth: '600px', margin: '0 auto' }}>Choose the security level your application needs. Start free, upgrade when you are ready.</p>
-                </div>
-
-                <div className="toggle-container animate-on-scroll is-visible">
-                    <span style={{ color: !isCompany ? 'var(--text-primary)' : 'var(--text-secondary)' }}>Individual</span>
-                    <div className={`toggle-btn ${isCompany ? 'active' : ''}`} onClick={() => setIsCompany(!isCompany)}>
-                        <div className="toggle-circle"></div>
-                    </div>
-                    <span style={{ color: isCompany ? 'var(--text-primary)' : 'var(--text-secondary)' }}>Startup / Company</span>
-                </div>
-
-                <div ref={cardsRef} className={`pricing-grid animate-on-scroll ${cardsVisible ? 'is-visible' : ''}`}>
-                    {/* Free Card */}
-                    <Card style={{ padding: '32px', display: 'flex', flexDirection: 'column' }}>
-                        <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>Free</h2>
-                        <div style={{ fontSize: '36px', fontWeight: 800, marginBottom: '24px' }}>₹0 <span style={{ fontSize: '16px', fontWeight: 400, color: 'var(--text-secondary, #57534E)' }}>/month</span></div>
-                        <div style={{ flexGrow: 1, marginBottom: '32px' }}>
-                            <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> 4 free scans a day</div>
-                            <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Basic vulnerability report</div>
-                            <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> OWASP Top 10 coverage</div>
-                            <div className="feature-item" style={{ marginTop: '24px', fontWeight: 600 }}>Top-up Scans:</div>
-                            <div className="feature-item" style={{ fontSize: '14px' }}>• 1 day (15 scans) for ₹39</div>
-                            <div className="feature-item" style={{ fontSize: '14px' }}>• 1 day (25 scans) for ₹49</div>
-                        </div>
-                        <Button variant="secondary" style={{ width: '100%' }}>Start Free</Button>
-                    </Card>
-
-                    {/* Pro Card */}
-                    <Card className="pro-card" style={{ display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
-                        <div style={{ backgroundColor: 'var(--accent-light, #CCFBF1)', padding: '32px', borderBottom: '1px solid var(--border-default, #E7E5E4)' }}>
-                            <div style={{ position: 'absolute', top: '16px', right: '16px', backgroundColor: 'var(--accent, #0D9488)', color: 'white', padding: '4px 12px', borderRadius: '9999px', fontSize: '12px', fontWeight: 700 }}>Most Popular</div>
-                            <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>Pro Monitor</h2>
-                            <div style={{ fontSize: '36px', fontWeight: 800 }}>
-                                ₹{isCompany ? '15,000' : '5,000'} <span style={{ fontSize: '16px', fontWeight: 400, color: 'var(--text-secondary, #57534E)' }}>/month</span>
-                            </div>
-                        </div>
-                        <div style={{ padding: '32px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                            <div style={{ flexGrow: 1, marginBottom: '32px' }}>
-                                <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Real-time Website Monitoring</div>
-                                <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Unlimited vulnerability scans</div>
-                                <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Detailed reports with remediation</div>
-                                <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Desktop & Email notifications</div>
-                                <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Priority email support</div>
-                                {isCompany && <div className="feature-item"><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Corporate Dashboard</div>}
-                            </div>
-                            <Button variant="primary" style={{ width: '100%' }}>Subscribe to Pro</Button>
-                        </div>
-                    </Card>
-
-                    {/* Defense Card */}
-                    <Card style={{ padding: '32px', display: 'flex', flexDirection: 'column', backgroundColor: '#1C1917', color: 'white' }}>
-                        <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '8px' }}>Defense</h2>
-                        <div style={{ fontSize: '36px', fontWeight: 800, marginBottom: '24px' }}>
-                            ₹{isCompany ? '20,000' : '10,000'} <span style={{ fontSize: '16px', fontWeight: 400, color: 'var(--text-muted, #A8A29E)' }}>/month</span>
-                        </div>
-                        <div style={{ flexGrow: 1, marginBottom: '32px' }}>
-                            <div className="feature-item" style={{ color: '#E7E5E4' }}><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Everything in Pro Monitor</div>
-                            <div className="feature-item" style={{ color: '#E7E5E4' }}><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Active Real-Time Protection</div>
-                            <div className="feature-item" style={{ color: '#E7E5E4' }}><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Automated Hacker Blocking</div>
-                            <div className="feature-item" style={{ color: '#E7E5E4' }}><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Attacker IP tracing</div>
-                            <div className="feature-item" style={{ color: '#E7E5E4' }}><Check size={20} color="var(--accent, #0D9488)" style={{ flexShrink: 0 }} /> Firewall rule management</div>
-                        </div>
-                        <Button variant="primary" style={{ width: '100%' }}>Subscribe to Defense</Button>
-                    </Card>
-                </div>
-
-                <div style={{ textAlign: 'center', marginTop: '32px', color: 'var(--text-secondary, #57534E)', fontSize: '14px' }}>
-                    All plans include Aadhaar-verified account security and local-only data processing.
-                </div>
-
-                <div ref={faqRef} className={`animate-on-scroll ${faqVisible ? 'is-visible' : ''}`} style={{ marginTop: '96px', maxWidth: '800px', margin: '96px auto 0' }}>
-                    <h2 style={{ fontSize: '28px', fontWeight: 700, marginBottom: '32px', textAlign: 'center' }}>Frequently Asked Questions</h2>
-                    <div>
-                        {faqs.map((faq, idx) => (
-                            <div key={idx} className="faq-item" onClick={() => toggleFaq(idx)}>
-                                <div className="faq-q">
-                                    {faq.q}
-                                    <Plus size={20} style={{ transform: openFaq === idx ? 'rotate(45deg)' : 'none', transition: 'transform 0.2s' }} />
-                                </div>
-                                <div className={`faq-a ${openFaq === idx ? 'open' : ''}`}>{faq.a}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+        {/* Security & Verification Assurance Banner */}
+        <div className="mt-12 p-6 md:p-8 rounded-2xl bg-white border border-neutral-200/80 shadow-sm max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-6">
+          <div className="w-14 h-14 rounded-2xl bg-teal-50 border border-teal-200 flex items-center justify-center text-[#0D9488] shrink-0">
+            <ShieldCheck className="w-7 h-7" />
+          </div>
+          <div className="text-center sm:text-left flex-1">
+            <h4 className="text-base font-bold text-neutral-900 mb-1">
+              Enterprise Grade Local-Only Security Guarantee
+            </h4>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+              All plans include Aadhaar-verified identity protections and zero data retention. Your scan payloads and vulnerability findings are never sold, cached, or transferred to third parties.
+            </p>
+          </div>
         </div>
-    );
+
+        {/* Frequently Asked Questions */}
+        <div 
+          ref={faqRef} 
+          className={`mt-20 max-w-3xl mx-auto transition-all duration-700 ${faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        >
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-200/60 text-neutral-700 text-xs font-bold uppercase tracking-wider mb-3">
+              <HelpCircle className="w-3.5 h-3.5" />
+              Frequently Asked Questions
+            </div>
+            <h2 className="text-3xl font-extrabold text-neutral-900 tracking-tight">
+              Got Questions? We’ve Got Answers.
+            </h2>
+          </div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div 
+                  key={idx} 
+                  className="border border-neutral-200 bg-white rounded-xl overflow-hidden transition-all duration-200 shadow-sm"
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleFaq(idx)}
+                    className="w-full py-4 px-5 text-left font-bold text-sm sm:text-base flex items-center justify-between gap-4 cursor-pointer hover:bg-neutral-50/80 transition-colors"
+                  >
+                    <span className="text-neutral-900">{faq.q}</span>
+                    <span className="w-7 h-7 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-600 shrink-0">
+                      {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 pb-5 text-xs sm:text-sm text-neutral-600 leading-relaxed border-t border-neutral-100 pt-3">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
 }

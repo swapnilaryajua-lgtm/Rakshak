@@ -79,6 +79,25 @@
   --accent-light: var(--color-accent-light);
   --accent-subtle: var(--color-accent-subtle);
 
+  /* Shadcn UI tokens */
+  --background: #FCFBF9;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #0D9488;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F4F0;
+  --secondary-foreground: #1A1A1A;
+  --muted: #F5F4F0;
+  --muted-foreground: #78716C;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #E5E4E2;
+  --input: #E5E4E2;
+  --ring: #0D9488;
+
   --severity-critical: var(--color-severity-critical);
   --severity-critical-bg: var(--color-severity-critical-bg);
   --severity-high: var(--color-severity-high);

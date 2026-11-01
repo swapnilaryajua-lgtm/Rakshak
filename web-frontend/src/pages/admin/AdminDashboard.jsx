@@ -234,11 +234,11 @@ export default function AdminDashboard() {
       )}
 
       {/* ════════════════════════════════════════════════════════════════════
-          ROW 1: BENTO STAT TILES (5 Primary KPI Cards with High Contrast)
+          ROW 1: BENTO STAT TILES (4 Primary KPI Cards with High Contrast)
           ════════════════════════════════════════════════════════════════════ */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
         gap: '16px',
         marginBottom: '24px'
       }}>
@@ -280,16 +280,6 @@ export default function AdminDashboard() {
           subtitle="Quarantined by administrator"
           chip={stats?.blockedUsers > 0 ? "Threats Blocked" : "Zero Breaches"}
           icon={<ShieldAlert size={22} color={stats?.blockedUsers > 0 ? "#F87171" : "#94A3B8"} />} 
-        />
-
-        {/* KPI 5: MRR */}
-        <StatCard 
-          variant="dark"
-          title="Estimated MRR" 
-          value={`₹${(stats?.revenue?.mrr ?? 0).toLocaleString('en-IN')}`} 
-          subtitle="Pro & Defense run-rate"
-          chip="Monthly"
-          icon={<IndianRupee size={22} color="#FBBF24" />} 
         />
       </div>
 

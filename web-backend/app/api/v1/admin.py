@@ -22,7 +22,7 @@ def is_test_user_condition():
 @router.get("/users", response_model=PaginatedResponse[AdminUserResponse])
 def get_all_users(
     page: int = Query(1, ge=1),
-    limit: int = Query(50, ge=1, le=100),
+    limit: int = Query(500, ge=1, le=1000),
     current_admin: User = Depends(get_admin_user),
     db: Session = Depends(get_db)
 ):
@@ -32,9 +32,22 @@ def get_all_users(
     total = users_query.count()
     users = users_query.order_by(User.created_at.desc()).offset(offset).limit(limit).all()
     
+    # Pre-fetch scan counts in 1 single grouped query to prevent N+1 overhead
+    user_ids = [u.id for u in users]
+    scan_counts = {}
+    if user_ids:
+        from sqlalchemy import func
+        scan_counts_tuples = (
+            db.query(ScanReport.user_id, func.count(ScanReport.id))
+            .filter(ScanReport.user_id.in_(user_ids))
+            .group_by(ScanReport.user_id)
+            .all()
+        )
+        scan_counts = {uid: count for uid, count in scan_counts_tuples}
+
     items = []
     for user in users:
-        scans_count = db.query(ScanReport).filter(ScanReport.user_id == user.id).count()
+        scans_count = scan_counts.get(user.id, 0)
         is_blocked = bool(getattr(user, "is_blocked", False))
         items.append({
             "id": user.id,

@@ -82,7 +82,8 @@ const Navbar = () => {
     return {
       textDecoration: 'none',
       color: isActive ? 'var(--accent, #0D9488)' : 'white',
-      fontWeight: 500,
+      backgroundColor: isActive ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
+      fontWeight: isActive ? 600 : 500,
       fontSize: '15px',
       position: 'relative',
       display: 'flex',
@@ -171,9 +172,8 @@ const Navbar = () => {
                     <motion.div
                       style={getLinkStyle(link.path)}
                       whileHover={{
-                        backgroundColor: 'rgba(255,255,255,0.08)',
+                        backgroundColor: 'rgba(255,255,255,0.12)',
                         color: 'white',
-                        x: 4,
                       }}
                       transition={{ duration: 0.15 }}
                     >
@@ -181,16 +181,16 @@ const Navbar = () => {
                       {isActive && (
                         <motion.div
                           layoutId="navbar-indicator"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           style={{
                             position: 'absolute',
                             left: '0px',
-                            top: '50%',
-                            transform: 'translateY(-50%)',
+                            top: '8px',
+                            bottom: '8px',
                             width: '4px',
-                            height: '60%',
                             borderRadius: '0 4px 4px 0',
                             backgroundColor: 'var(--accent, #0D9488)',
-                            boxShadow: '0 0 8px var(--accent, #0D9488)',
+                            boxShadow: '0 0 10px rgba(13, 148, 136, 0.7)',
                           }}
                         />
                       )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { 
   Activity, Shield, ShieldCheck, ShieldAlert, LogIn, LogOut, 
-  Radar, UserCheck, RefreshCw, Search, Filter, Globe, 
+  Radar, UserCheck, RefreshCw, Search, Filter, 
   Laptop, Clock, ChevronLeft, ChevronRight, CheckCircle2, AlertTriangle
 } from 'lucide-react';
 import Card from '../../components/Card';
@@ -396,7 +396,6 @@ export default function AdminActivity() {
                 <th style={{ padding: '14px 20px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Event</th>
                 <th style={{ padding: '14px 20px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>User</th>
                 <th style={{ padding: '14px 20px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Action & Details</th>
-                <th style={{ padding: '14px 20px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Location & IP</th>
                 <th style={{ padding: '14px 20px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px' }}>Device</th>
                 <th style={{ padding: '14px 20px', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94A3B8', fontWeight: '700', letterSpacing: '0.5px', textAlign: 'right' }}>Timestamp</th>
               </tr>
@@ -404,13 +403,13 @@ export default function AdminActivity() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} style={{ padding: '64px', textAlign: 'center' }}>
+                  <td colSpan={5} style={{ padding: '64px', textAlign: 'center' }}>
                     <LoadingSpinner size="md" />
                   </td>
                 </tr>
               ) : activities.length === 0 ? (
                 <tr>
-                  <td colSpan={6} style={{ padding: '48px', textAlign: 'center', color: '#94A3B8' }}>
+                  <td colSpan={5} style={{ padding: '48px', textAlign: 'center', color: '#94A3B8' }}>
                     No activity logs match your filter criteria.
                   </td>
                 </tr>
@@ -434,18 +433,9 @@ export default function AdminActivity() {
                         {act.userEmail}
                       </div>
                     </td>
-                    <td style={{ padding: '14px 20px', verticalAlign: 'top', maxWidth: '320px' }}>
+                    <td style={{ padding: '14px 20px', verticalAlign: 'top', maxWidth: '380px' }}>
                       <div style={{ fontSize: '0.85rem', color: '#E2E8F0', lineHeight: 1.4, wordBreak: 'break-word' }}>
                         {act.description}
-                      </div>
-                    </td>
-                    <td style={{ padding: '14px 20px', verticalAlign: 'top' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#CBD5E1' }}>
-                        <Globe size={13} color="#94A3B8" />
-                        <span>{act.location}</span>
-                      </div>
-                      <div style={{ fontSize: '0.75rem', color: '#64748B', fontFamily: 'monospace', marginTop: '2px' }}>
-                        {act.ipAddress}
                       </div>
                     </td>
                     <td style={{ padding: '14px 20px', verticalAlign: 'top' }}>

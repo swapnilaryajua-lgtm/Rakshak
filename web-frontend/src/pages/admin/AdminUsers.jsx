@@ -16,7 +16,7 @@ export default function AdminUsers() {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const data = await getAdminUsers();
+      const data = await getAdminUsers({ limit: 500 });
       setUsers(data?.items || (Array.isArray(data) ? data : []));
     } catch (error) {
       console.error('Failed to load admin users', error);
